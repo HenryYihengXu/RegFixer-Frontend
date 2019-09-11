@@ -1,3 +1,2 @@
 # RegFixer-Frontend
-
-# sdf
+A frontend webpage for RegFixer.
