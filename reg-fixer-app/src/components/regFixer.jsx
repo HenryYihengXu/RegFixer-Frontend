@@ -1,27 +1,44 @@
 import React, { Component } from "react";
 import _ from "lodash";
-import Examples from "./examples";
 import Menu from "./menu";
 import ExampleTable from "./exampleTable";
 import ExampleForm from "./exampleForm";
 
 class RegFixer extends Component {
   state = {
-    positiveExamples: ["asd", "sdfasd"],
-    negtiveExamples: ["sdafsda", "qqq", "sadfs"]
+    positiveExamples: [],
+    negtiveExamples: []
   };
 
   handleDeletePositive = example => {
     const positiveExamples = this.state.positiveExamples.filter(
-      e => e !== example
+      ex => ex !== example
     );
     this.setState({ positiveExamples });
   };
 
   handleDeleteNegtive = example => {
     const negtiveExamples = this.state.negtiveExamples.filter(
-      e => e !== example
+      ex => ex !== example
     );
+    this.setState({ negtiveExamples });
+  };
+
+  handleAddPositive = example => {
+    const positiveExamples = [...this.state.positiveExamples];
+    if (positiveExamples.indexOf(example) >= 0) {
+        return;
+    }
+    positiveExamples.push(example);
+    this.setState({ positiveExamples });
+  };
+
+  handleAddNegtive = example => {
+    const negtiveExamples = [...this.state.negtiveExamples];
+    if (negtiveExamples.indexOf(example) >= 0) {
+        return;
+    }
+    negtiveExamples.push(example);
     this.setState({ negtiveExamples });
   };
 
@@ -40,11 +57,14 @@ class RegFixer extends Component {
               onDeletePositive={this.handleDeletePositive}
               onDeleteNegtive={this.handleDeleteNegtive}
             />
-            <ExampleForm />
+            <ExampleForm
+              positiveExamples={positiveExamples}
+              negtiveExamples={negtiveExamples}
+              onAddPositive={this.handleAddPositive}
+              onAddNegtive={this.handleAddNegtive}
+            />
           </div>
         </div>
-
-        <h1>Fix It!</h1>
       </React.Fragment>
     );
   }

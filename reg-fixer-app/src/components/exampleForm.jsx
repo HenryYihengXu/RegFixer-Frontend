@@ -1,45 +1,22 @@
-import React from "react";
+import React, { Component } from 'react';
+import AddExampleForm from "./addExampleForm";
 
-const ExampleForm = () => {
+const ExampleForm = props => {
   return (
     <div className="row">
       <div className="col-6">
-        <form>
-          <div class="form-row align-items-center">
-            <div class="col-10 my-1">
-              <input
-                type="text"
-                class="form-control"
-                id="inlineFormInputName"
-                placeholder="New Positive Example"
-              />
-            </div>
-            <div class="col-auto my-1">
-              <button type="submit" class="btn btn-primary">
-                +
-              </button>
-            </div>
-          </div>
-        </form>
+        <AddExampleForm
+          label="Positive"
+          examples={props.positiveExamples}
+          onAdd={props.onAddPositive}
+        />
       </div>
       <div className="col-6">
-        <form>
-          <div class="form-row align-items-center">
-            <div class="col-9 my-1">
-              <input
-                type="text"
-                class="form-control"
-                id="inlineFormInputName"
-                placeholder="New Negtive Example"
-              />
-            </div>
-            <div class="col-auto my-1">
-              <button type="submit" class="btn btn-primary">
-                +
-              </button>
-            </div>
-          </div>
-        </form>
+        <AddExampleForm
+          label="Negtive"
+          examples={props.negtiveExamples}
+          onAdd={props.onAddNegtive}
+        />
       </div>
     </div>
   );
