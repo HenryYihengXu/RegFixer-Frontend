@@ -7,7 +7,8 @@ import ExampleForm from "./exampleForm";
 class RegFixer extends Component {
   state = {
     positiveExamples: [],
-    negtiveExamples: []
+    negtiveExamples: [],
+    regex: ""
   };
 
   handleDeletePositive = example => {
