@@ -27,7 +27,7 @@ class RegFixer extends Component {
   handleAddPositive = example => {
     const positiveExamples = [...this.state.positiveExamples];
     if (positiveExamples.indexOf(example) >= 0) {
-        return;
+      return;
     }
     positiveExamples.push(example);
     this.setState({ positiveExamples });
@@ -36,36 +36,34 @@ class RegFixer extends Component {
   handleAddNegtive = example => {
     const negtiveExamples = [...this.state.negtiveExamples];
     if (negtiveExamples.indexOf(example) >= 0) {
-        return;
+      return;
     }
     negtiveExamples.push(example);
     this.setState({ negtiveExamples });
   };
+  handleSortPositive = example => {};
+
+  handleSortNegtive = example => {};
 
   render() {
     const { positiveExamples, negtiveExamples } = this.state;
     return (
-      <React.Fragment>
-        <div className="row">
-          <div className="col-2">
-            <Menu />
-          </div>
-          <div className="col">
-            <ExampleTable
-              positiveExamples={positiveExamples}
-              negtiveExamples={negtiveExamples}
-              onDeletePositive={this.handleDeletePositive}
-              onDeleteNegtive={this.handleDeleteNegtive}
-            />
-            <ExampleForm
-              positiveExamples={positiveExamples}
-              negtiveExamples={negtiveExamples}
-              onAddPositive={this.handleAddPositive}
-              onAddNegtive={this.handleAddNegtive}
-            />
-          </div>
-        </div>
-      </React.Fragment>
+      <div>
+        <ExampleTable
+          positiveExamples={positiveExamples}
+          negtiveExamples={negtiveExamples}
+          onDeletePositive={this.handleDeletePositive}
+          onDeleteNegtive={this.handleDeleteNegtive}
+          onSortPositive={this.handleSortPositive}
+          onSortNegtive={this.handleSortNegtive}
+        />
+        <ExampleForm
+          positiveExamples={positiveExamples}
+          negtiveExamples={negtiveExamples}
+          onAddPositive={this.handleAddPositive}
+          onAddNegtive={this.handleAddNegtive}
+        />
+      </div>
     );
   }
 }

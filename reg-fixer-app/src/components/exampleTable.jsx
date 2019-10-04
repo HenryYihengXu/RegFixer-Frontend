@@ -9,6 +9,7 @@ const ExampleTable = props => {
           label="Positive"
           examples={props.positiveExamples}
           onDelete={props.onDeletePositive}
+          onSort={props.onSortPositive}
         />
       </div>
       <div className="col-6">
@@ -16,6 +17,7 @@ const ExampleTable = props => {
           label="Negtive"
           examples={props.negtiveExamples}
           onDelete={props.onDeleteNegtive}
+          onSort={props.onSortNegtive}
         />
       </div>
     </div>

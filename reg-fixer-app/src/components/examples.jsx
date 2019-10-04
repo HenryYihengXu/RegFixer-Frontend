@@ -1,12 +1,17 @@
 import React, { Component } from "react";
+import _ from "lodash";
 
 const Examples = props => {
   const { examples, label } = props;
+  examples.sort();
+
   return (
     <table className="table">
       <thead>
         <tr>
-          <th className="clickable">{label + " Examples"}</th>
+          <th className="clickable" onClick={props.onSort}>
+            {label + " Examples"}
+          </th>
           <th />
         </tr>
       </thead>
