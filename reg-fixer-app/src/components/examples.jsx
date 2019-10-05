@@ -9,9 +9,7 @@ const Examples = props => {
     <table className="table">
       <thead>
         <tr>
-          <th className="clickable" onClick={props.onSort}>
-            {label + " Examples"}
-          </th>
+          <th className="clickable">{label + " Examples"}</th>
           <th />
         </tr>
       </thead>

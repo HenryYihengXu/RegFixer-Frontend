@@ -1,14 +1,16 @@
 import React, { Component } from "react";
 import _ from "lodash";
-import Menu from "./menu";
 import ExampleTable from "./exampleTable";
-import ExampleForm from "./exampleForm";
+import ExampleForms from "./exampleForms";
+import RegexForm from "./regexForm";
+import RegexDisplay from "./regexDisplay";
 
 class RegFixer extends Component {
   state = {
     positiveExamples: [],
     negtiveExamples: [],
-    regex: ""
+    regex: "",
+    isSaved: false
   };
 
   handleDeletePositive = example => {
@@ -42,9 +44,17 @@ class RegFixer extends Component {
     negtiveExamples.push(example);
     this.setState({ negtiveExamples });
   };
-  handleSortPositive = example => {};
 
-  handleSortNegtive = example => {};
+  handleAddExpression = expression => {
+    const regex = expression;
+    const isSaved = true;
+    this.setState({ regex, isSaved });
+  };
+
+  handleEdit = () => {
+    const isSaved = false;
+    this.setState({ isSaved });
+  };
 
   render() {
     const { positiveExamples, negtiveExamples } = this.state;
@@ -58,12 +68,32 @@ class RegFixer extends Component {
           onSortPositive={this.handleSortPositive}
           onSortNegtive={this.handleSortNegtive}
         />
-        <ExampleForm
+        <ExampleForms
           positiveExamples={positiveExamples}
           negtiveExamples={negtiveExamples}
           onAddPositive={this.handleAddPositive}
           onAddNegtive={this.handleAddNegtive}
         />
+        <div
+          style={{
+            marginTop: 20,
+            marginBottom: 20,
+            marginLeft: 15,
+            marginRight: 15
+          }}
+        >
+          {this.state.isSaved ? (
+            <RegexDisplay regex={this.state.regex} onEdit={this.handleEdit} />
+          ) : (
+            <RegexForm
+              regex={this.state.regex}
+              onAdd={this.handleAddExpression}
+            />
+          )}
+        </div>
+        <form>
+          <button className="btn btn-primary btn-lg">Fix it!</button>
+        </form>
       </div>
     );
   }

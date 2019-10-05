@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import AddExampleForm from "./addExampleForm";
 
-const ExampleForm = props => {
+const ExampleForms = props => {
   return (
     <div className="row">
       <div className="col-6">
@@ -22,4 +22,4 @@ const ExampleForm = props => {
   );
 };
 
-export default ExampleForm;
+export default ExampleForms;

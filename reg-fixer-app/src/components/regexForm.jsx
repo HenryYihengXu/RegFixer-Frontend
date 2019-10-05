@@ -1,12 +1,22 @@
 import React, { Component } from "react";
+import oneLineInputForm from "./common/oneLineInputForm";
 import Joi from "joi-browser";
-import { Input } from "semantic-ui-react";
 
-class oneLineInputForm extends Component {
+class RegexForm extends oneLineInputForm {
+  schema = {
+    newExpression: Joi.string()
+      .required()
+      .label("New Expression")
+  };
+
   ref = React.createRef();
   state = {
     data: {},
-    errors: {},
+    errors: {}
+  };
+
+  componentDidMount = () => {
+    this.setState({ data: { newExpression: this.props.regex } });
   };
 
   validateProperty = ({ name, value }) => {
@@ -29,10 +39,9 @@ class oneLineInputForm extends Component {
   handleAdd = input => {
     let errors = this.validate();
     this.setState({ errors: errors || {} });
-    this.setState({ data: { [this.state.name]: "" } });
     if (errors) return;
 
-    this.doSubmit(input);
+    this.props.onAdd(input);
   };
 
   handleChange = ({ currentTarget: input }) => {
@@ -45,7 +54,7 @@ class oneLineInputForm extends Component {
     this.setState({ data, errors, name: input.name, value: input.value });
   };
 
-  renderInput(name, label) {
+  renderInput(newExpression, label) {
     const { data, errors } = this.state;
     return (
       <div
@@ -58,20 +67,19 @@ class oneLineInputForm extends Component {
       >
         <div className="col-10 my-1">
           <input
-            id={name}
+            id={newExpression}
             ref={this.ref}
             type="text"
-            name={name}
+            name={newExpression}
             className="form-control"
-            placeholder={label}
-            //content={data[name]}
-            value={data[name]}
+            placeholder={"New Regular Expression"}
+            value={data.newExpression}
             label={label}
             onChange={this.handleChange}
-            error={errors[name]}
+            error={errors.newExpression}
           />
-          {errors[name] && (
-            <div className="alert alert-danger">{errors[name]}</div>
+          {errors.newExpression && (
+            <div className="alert alert-danger">{errors.newExpression}</div>
           )}
         </div>
         <div className="col-auto my-1">
@@ -81,12 +89,18 @@ class oneLineInputForm extends Component {
             type="submit"
             className="btn btn-primary sm"
           >
-            +
+            Save
           </button>
         </div>
       </div>
     );
   }
+  render() {
+    return this.renderInput(
+      "newExpression",
+      this.props.regex || "New Regular Expression"
+    );
+  }
 }
 
-export default oneLineInputForm;
+export default RegexForm;
