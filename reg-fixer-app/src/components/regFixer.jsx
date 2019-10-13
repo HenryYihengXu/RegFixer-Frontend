@@ -1,79 +1,62 @@
 import React, { Component } from "react";
 import _ from "lodash";
-import ExampleTable from "./exampleTable";
-import ExampleForms from "./exampleForms";
-import RegexForm from "./regexForm";
-import RegexDisplay from "./regexDisplay";
+import TextareaAutosize from "@material-ui/core/TextareaAutosize";
+import ExamplesInput from "./examplesInput";
+import ExpressionInput from "./expressionInput";
 
 class RegFixer extends Component {
   state = {
     positiveExamples: [],
-    negtiveExamples: [],
+    negativeExamples: [],
     regex: "",
-    isSaved: false
+    isFixed: false,
+    isWaiting: false
   };
 
-  handleDeletePositive = example => {
-    const positiveExamples = this.state.positiveExamples.filter(
-      ex => ex !== example
-    );
-    this.setState({ positiveExamples });
-  };
+  positiveExamplesRef = React.createRef();
+  negativeExamplesRef = React.createRef();
+  expressionRef = React.createRef();
 
-  handleDeleteNegtive = example => {
-    const negtiveExamples = this.state.negtiveExamples.filter(
-      ex => ex !== example
-    );
-    this.setState({ negtiveExamples });
-  };
-
-  handleAddPositive = example => {
-    const positiveExamples = [...this.state.positiveExamples];
-    if (positiveExamples.indexOf(example) >= 0) {
-      return;
-    }
-    positiveExamples.push(example);
-    this.setState({ positiveExamples });
-  };
-
-  handleAddNegtive = example => {
-    const negtiveExamples = [...this.state.negtiveExamples];
-    if (negtiveExamples.indexOf(example) >= 0) {
-      return;
-    }
-    negtiveExamples.push(example);
-    this.setState({ negtiveExamples });
-  };
-
-  handleAddExpression = expression => {
-    const regex = expression;
-    const isSaved = true;
-    this.setState({ regex, isSaved });
-  };
-
-  handleEdit = () => {
-    const isSaved = false;
-    this.setState({ isSaved });
+  handleFix = () => {
+    const positiveExamples = this.positiveExamplesRef.current.value;
+    const negativeExamples = this.negativeExamplesRef.current.value;
+    const regex = this.expressionRef.current.value;
+    this.setState({ positiveExamples, negativeExamples, regex });
+    //this.setState({ regex });
   };
 
   render() {
     const { positiveExamples, negtiveExamples } = this.state;
     return (
       <div>
-        <ExampleTable
-          positiveExamples={positiveExamples}
-          negtiveExamples={negtiveExamples}
-          onDeletePositive={this.handleDeletePositive}
-          onDeleteNegtive={this.handleDeleteNegtive}
-          onSortPositive={this.handleSortPositive}
-          onSortNegtive={this.handleSortNegtive}
-        />
-        <ExampleForms
-          positiveExamples={positiveExamples}
-          negtiveExamples={negtiveExamples}
-          onAddPositive={this.handleAddPositive}
-          onAddNegtive={this.handleAddNegtive}
-        />
+        <div
+          className="row"
+          style={{
+            marginTop: 40,
+            marginBottom: 20
+          }}
+        >
+          <div className="col-6">
+            <TextareaAutosize
+              style={{
+                width: 550
+              }}
+              ref={this.positiveExamplesRef}
+              aria-label={"positive"}
+              placeholder={"Positive Examples"}
+            />
+          </div>
+          <div className="col-6">
+            <TextareaAutosize
+              style={{
+                width: 550
+              }}
+              ref={this.negativeExamplesRef}
+              aria-label={"negative"}
+              placeholder={"Negative Examples"}
+            />
+          </div>
+        </div>
         <div
           style={{
             marginTop: 20,
@@ -81,19 +64,22 @@ class RegFixer extends Component {
             marginLeft: 15,
             marginRight: 15
           }}
+          className="form"
         >
-          {this.state.isSaved ? (
-            <RegexDisplay regex={this.state.regex} onEdit={this.handleEdit} />
-          ) : (
-            <RegexForm
-              regex={this.state.regex}
-              onAdd={this.handleAddExpression}
-            />
-          )}
+          <input
+            style={{
+              width: 700
+            }}
+            id={"newExpression"}
+            ref={this.expressionRef}
+            type="text"
+            name={"newExpression"}
+            placeholder={"New Expression"}
+          />
         </div>
-        <form>
-          <button className="btn btn-primary btn-lg">Fix it!</button>
-        </form>
+        <button className="btn btn-primary" onClick={this.handleFix}>
+          Fix it!
+        </button>
       </div>
     );
   }
