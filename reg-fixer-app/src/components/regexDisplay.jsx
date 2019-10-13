@@ -7,7 +7,7 @@ const RegexDisplay = props => {
         <tr>
           <td style={{ width: "25%" }}>Regex to Fix:</td>
           <td style={{ width: "70%", align: "center" }}>{props.regex}</td>
-          <td>
+          <td style={{ width: "5%", align: "center" }}>
             <button className="btn btn-warning btn-sm" onClick={props.onEdit}>
               Edit
             </button>
