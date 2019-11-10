@@ -13,24 +13,46 @@ import { CardHeader } from "@material-ui/core";
 import { blue, grey } from "@material-ui/core/colors";
 
 class InputCard extends Component {
-
+  // handleChange = ({ currentTarget: input }) => {
+  //   this.props.handleChange(input.textContent);
+  // };
   handleChange = ({ currentTarget: input }) => {
-    this.props.handleChange(input.value)
+    this.props.handleChange(input.value);
   };
   render() {
     return (
       <div>
-        <Card style={{maxWidth : 550}}>
-          <CardContent style={{ backgroundColor: blue[500], height: 50 }}>
+        <Card style={{ maxWidth: 550 }}>
+          <CardContent
+            style={{
+              backgroundColor: this.props.color[this.props.darkness],
+              height: 50
+            }}
+          >
             <h6 style={{ color: grey[50] }}>{this.props.name}</h6>
           </CardContent>
           <CardActions>
+            {/* <div
+              style="border:1px solid black;"
+              contenteditable="true"
+              style={{
+                width: 530,
+                textAlign: "left",
+                border: "1px solid lightblue"
+              }}
+              onInput={this.handleChange}
+            >
+              {this.props.examples.map(example => (
+                <p>{example};</p>
+              ))}
+            </div> */}
             <TextareaAutosize
               style={{
                 width: 550
               }}
               placeholder={this.props.name}
               onChange={this.handleChange}
+              value = {this.examples}
             />
           </CardActions>
         </Card>

@@ -4,6 +4,11 @@ import TextareaAutosize from "@material-ui/core/TextareaAutosize";
 import InputCard from "./inputCard";
 import ExpressionCard from "./expressionCard";
 import CircularProgress from "@material-ui/core/CircularProgress";
+import { blue, green, yellow, red } from "@material-ui/core/colors";
+import axios from "axios";
+
+//const API_URL = "https://jsonplaceholder.typicode.com/users"; //"http://localhost:8080/greeting"
+let API_URL = "http://localhost:3001";
 
 class RegFixer extends Component {
   state = {
@@ -14,30 +19,74 @@ class RegFixer extends Component {
     isWaiting: false
   };
 
-  positiveExamplesRef = React.createRef();
-  negativeExamplesRef = React.createRef();
-  expressionRef = React.createRef();
+  handleFix = async () => {
+    // this.setState({ isWaiting: true }, async () => {
+    //   const response = await axios.post(API_URL, {
+    //     positiveExamples: this.state.positiveExamples.split("\n"),
+    //     negativeExamples: this.state.negativeExamples.split("\n"),
+    //     regex: this.state.regex
+    //   });
 
-  handleFix = () => {
-    let isWaiting = true;
-    this.setState({ isWaiting });
-    // TODO: call to back end
-    let i;
-    let j;
-    let n = 0;
-    for (i = 0; i < 100000; i++) {
-      for (j = 0; j < 100000; j++) {
-        n++;
-        n--;
-      }
-    }
-    isWaiting = false;
-    const isFixed = true;
-    this.setState({ isWaiting, isFixed });
+    //   this.setState({
+    //     isWaiting: false,
+    //     regex: response.data.regex
+    //   });
+    // });
+
+    axios.post("http://localhost:3001").then(resp => {
+      console.log("data: ", resp);
+      this.setState({
+        isWaiting: false,
+        regex: resp.data
+      });
+    });
+
+    // this.setState({ isWaiting: true });
+    // axios.defaults.headers.post["Content-Type"] =
+    //   "application/x-www-form-urlencoded";
+    // axios.defaults.headers.post["Access-Control-Allow-Origin"] = "*";
+    // const response = await axios.post(API_URL, {
+    //   // positiveExamples: this.state.positiveExamples.split("\n"),
+    //   // negativeExamples: this.state.negativeExamples.split("\n"),
+    //   regex: this.state.regex
+    // });
+    // this.setState({
+    //   isWaiting: false,
+    //   regex: response.data.regex
+    // });
   };
+
+  // handleFix = () => {
+  //   this.setState({ isWaiting: true });
+  //   this.wait();
+  // };
+
+  // wait = async () => {
+  //   await this.sleep(500);
+  //   this.callBackend();
+  //   this.setState({ isWaiting: false, isFixed: true });
+  // };
+
+  // sleep = milliseconds => {
+  //   return new Promise(resolve => setTimeout(resolve, milliseconds));
+  // };
+
+  // TODO: call to back end
+  // callBackend = () => {
+  //   let i;
+  //   let j;
+  //   let n = 0;
+  //   for (i = 0; i < 100000; i++) {
+  //     for (j = 0; j < 100000; j++) {
+  //       n++;
+  //       n--;
+  //     }
+  //   }
+  // };
 
   handlePositiveChange = positiveExamples => {
     // TODO: update dynamic matching
+    // this.setState({ positiveExamples: positiveExamples.split(';') });
     this.setState({ positiveExamples });
   };
 
@@ -46,18 +95,20 @@ class RegFixer extends Component {
     this.setState({ negativeExamples });
   };
 
-  handleRegexChange = negativeExamples => {
+  handleRegexChange = regex => {
     // TODO: update dynamic matching
-    this.setState({ negativeExamples });
+    this.setState({ regex });
   };
 
   render() {
     if (this.state.isWaiting === true) {
       return (
         <div>
-          <CircularProgress style={{
-            marginTop: 40
-          }} />
+          <CircularProgress
+            style={{
+              marginTop: 40
+            }}
+          />
         </div>
       );
     }
@@ -80,7 +131,11 @@ class RegFixer extends Component {
           >
             <InputCard
               name="Positive Examples"
+              color={green}
+              darkness={500}
               handleChange={this.handlePositiveChange}
+              examples={this.state.positiveExamples}
+              regex={this.state.regex}
             />
           </div>
           <div
@@ -93,7 +148,11 @@ class RegFixer extends Component {
           >
             <InputCard
               name="Negative Examples"
+              color={red}
+              darkness={500}
               handleChange={this.handleNegativeChange}
+              examples={this.state.negativeExamples}
+              regex={this.state.regex}
             />
           </div>
         </div>
@@ -109,7 +168,15 @@ class RegFixer extends Component {
           }}
           className="form"
         >
-          <ExpressionCard handleChange={this.handleRegexChange} />
+          <ExpressionCard
+            name="Regex to be fixed"
+            color={yellow}
+            darkness={700}
+            handleChange={this.handleRegexChange}
+            positiveExamples={this.state.positiveExamples}
+            negativeExamples={this.state.negativeExamples}
+            regex={this.state.regex}
+          />
         </div>
         <button className="btn btn-primary" onClick={this.handleFix}>
           Fix it!
