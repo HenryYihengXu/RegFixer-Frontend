@@ -16,8 +16,8 @@ class App extends Component {
       <div className="App" /*style={{ backgroundColor: grey[900] }}*/>
         <AppBar position="relative" style={{ backgroundColor: blue[500] }}>
           <Toolbar>
-            <Typography variant="h6" color="#cccccc" noWrap>
-              <i class="fa fa-wrench" aria-hidden="true"></i>
+            <Typography variant="h6" noWrap>
+              <i className="fa fa-wrench" aria-hidden="true"></i>
               {" RegFixer"}
             </Typography>
           </Toolbar>

@@ -6,87 +6,45 @@ import ExpressionCard from "./expressionCard";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import { blue, green, yellow, red } from "@material-ui/core/colors";
 import axios from "axios";
+import ResultCard from './resultCard';
 
-//const API_URL = "https://jsonplaceholder.typicode.com/users"; //"http://localhost:8080/greeting"
-let API_URL = "http://localhost:3001";
+const API_URL = "http://localhost:3001";
 
 class RegFixer extends Component {
   state = {
     positiveExamples: "",
     negativeExamples: "",
     regex: "",
+    result: "",
     isFixed: false,
     isWaiting: false
   };
 
   handleFix = async () => {
-    // this.setState({ isWaiting: true }, async () => {
-    //   const response = await axios.post(API_URL, {
-    //     positiveExamples: this.state.positiveExamples.split("\n"),
-    //     negativeExamples: this.state.negativeExamples.split("\n"),
-    //     regex: this.state.regex
-    //   });
-
+    // this.setState({ isWaiting: true });
+    // axios.post("http://localhost:3001").then(resp => {
+    //   console.log("data: ", resp);
     //   this.setState({
     //     isWaiting: false,
-    //     regex: response.data.regex
+    //     regex: resp.data
     //   });
     // });
 
-    axios.post("http://localhost:3001").then(resp => {
-      console.log("data: ", resp);
-      this.setState({
-        isWaiting: false,
-        regex: resp.data
-      });
+    this.setState({ isWaiting: true });
+    const response = await axios.post(API_URL, {
+      positiveExamples: this.state.positiveExamples.split("\n"),
+      negativeExamples: this.state.negativeExamples.split("\n"),
+      regex: this.state.regex
     });
-
-    // this.setState({ isWaiting: true });
-    // axios.defaults.headers.post["Content-Type"] =
-    //   "application/x-www-form-urlencoded";
-    // axios.defaults.headers.post["Access-Control-Allow-Origin"] = "*";
-    // const response = await axios.post(API_URL, {
-    //   // positiveExamples: this.state.positiveExamples.split("\n"),
-    //   // negativeExamples: this.state.negativeExamples.split("\n"),
-    //   regex: this.state.regex
-    // });
-    // this.setState({
-    //   isWaiting: false,
-    //   regex: response.data.regex
-    // });
+    this.setState({
+      isWaiting: false,
+      isFixed: true,
+      result: response.data
+    });
   };
-
-  // handleFix = () => {
-  //   this.setState({ isWaiting: true });
-  //   this.wait();
-  // };
-
-  // wait = async () => {
-  //   await this.sleep(500);
-  //   this.callBackend();
-  //   this.setState({ isWaiting: false, isFixed: true });
-  // };
-
-  // sleep = milliseconds => {
-  //   return new Promise(resolve => setTimeout(resolve, milliseconds));
-  // };
-
-  // TODO: call to back end
-  // callBackend = () => {
-  //   let i;
-  //   let j;
-  //   let n = 0;
-  //   for (i = 0; i < 100000; i++) {
-  //     for (j = 0; j < 100000; j++) {
-  //       n++;
-  //       n--;
-  //     }
-  //   }
-  // };
 
   handlePositiveChange = positiveExamples => {
     // TODO: update dynamic matching
-    // this.setState({ positiveExamples: positiveExamples.split(';') });
     this.setState({ positiveExamples });
   };
 
@@ -131,7 +89,7 @@ class RegFixer extends Component {
           >
             <InputCard
               name="Positive Examples"
-              color={green}
+              color={blue}
               darkness={500}
               handleChange={this.handlePositiveChange}
               examples={this.state.positiveExamples}
@@ -148,7 +106,7 @@ class RegFixer extends Component {
           >
             <InputCard
               name="Negative Examples"
-              color={red}
+              color={blue}
               darkness={500}
               handleChange={this.handleNegativeChange}
               examples={this.state.negativeExamples}
@@ -175,7 +133,26 @@ class RegFixer extends Component {
             handleChange={this.handleRegexChange}
             positiveExamples={this.state.positiveExamples}
             negativeExamples={this.state.negativeExamples}
-            regex={this.state.regex}
+            value={this.state.regex}
+          />
+        </div>
+        <div
+          style={{
+            marginTop: 40,
+            marginBottom: 20,
+            marginLeft: 15,
+            marginRight: 15,
+            display: "flex",
+            //alignItems: "center",
+            justifyContent: "center"
+          }}
+          className="form"
+        >
+          <ResultCard
+            name="Result"
+            color={green}
+            darkness={500}
+            value={this.state.result}
           />
         </div>
         <button className="btn btn-primary" onClick={this.handleFix}>

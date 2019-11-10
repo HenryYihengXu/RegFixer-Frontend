@@ -52,9 +52,9 @@ class ExpressionCard extends Component {
               id={"regex"}
               type="text"
               name={"regex"}
-              placeholder={"Regex to be fixed"}
+              placeholder={this.props.name}
               onChange={this.handleChange}
-              value={this.props.regex}
+              value={this.props.value}
             />
           </CardActions>
         </Card>
