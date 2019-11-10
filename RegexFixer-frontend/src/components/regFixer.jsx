@@ -31,15 +31,24 @@ class RegFixer extends Component {
     // });
 
     this.setState({ isWaiting: true });
+    // let pe = this.state.positiveExamples.split("\n");
+    // let ne = this.state.negativeExamples.split("\n");
+    // pe = pe.filter(e => {e !== ""});
+    
     const response = await axios.post(API_URL, {
       positiveExamples: this.state.positiveExamples.split("\n"),
       negativeExamples: this.state.negativeExamples.split("\n"),
       regex: this.state.regex
     });
+    let result = response.data[0];
+    if(result[0] === "#") {
+      result = result.substring(5, result.length - 5);
+    }
+    console.log(result);
     this.setState({
       isWaiting: false,
       isFixed: true,
-      result: response.data
+      result
     });
   };
 

@@ -25,10 +25,16 @@ app.post("/", async (req, res) => {
     }
   }
   fs.writeFile(fileName, input, async () => {
-    const { stdout, stderr } = await exec("java Add 1 2"); // TODO: change this command to the correct one
+    // const { stdout, stderr } = await exec("java Add 1 2"); // TODO: change this command to the correct one
+    // const { stdout, stderr } = await exec("java -jar target/regfixer.jar -m 1 fix --file tests/benchmark_explicit/test_ssn.txt");
+    const { stdout, stderr } = await exec("java -jar target/regfixer.jar -m 1 fix --file " + fileName);
     console.log("stdout:", stdout);
     console.log("stderr:", stderr);
-    res.send(stdout);
+    let result = stdout.match("#sol#.*#sol#");
+    if (result === "") {
+      result = "Solution not found, try to revise your regex."
+    }
+    res.send(result);
   });
 });
 
