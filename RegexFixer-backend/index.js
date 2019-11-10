@@ -25,7 +25,7 @@ app.post("/", async (req, res) => {
     }
   }
   fs.writeFile(fileName, input, async () => {
-    const { stdout, stderr } = await exec("java Add 1 2");
+    const { stdout, stderr } = await exec("java Add 1 2"); // TODO: change this command to the correct one
     console.log("stdout:", stdout);
     console.log("stderr:", stderr);
     res.send(stdout);
