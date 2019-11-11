@@ -1,0 +1,13 @@
+Exception in thread "main" java.lang.UnsatisfiedLinkError: no libz3java in java.library.path
+        at java.lang.ClassLoader.loadLibrary(Unknown Source)
+        at java.lang.Runtime.loadLibrary0(Unknown Source)
+        at java.lang.System.loadLibrary(Unknown Source)
+        at com.microsoft.z3.Native.<clinit>(Native.java:14)
+        at com.microsoft.z3.Context.<init>(Context.java:35)
+        at edu.wisc.regfixer.synthesize.Formula.<init>(Formula.java:70)
+        at edu.wisc.regfixer.synthesize.Synthesis.<init>(Synthesis.java:37)
+        at edu.wisc.regfixer.enumerate.Enumerant.synthesize(Enumerant.java:373)
+        at edu.wisc.regfixer.RegFixer.synthesisLoop(RegFixer.java:373)
+        at edu.wisc.regfixer.RegFixer.fix(RegFixer.java:169)
+        at edu.wisc.regfixer.CLI.handleFix(CLI.java:433)
+        at edu.wisc.regfixer.CLI.main(CLI.java:242)
