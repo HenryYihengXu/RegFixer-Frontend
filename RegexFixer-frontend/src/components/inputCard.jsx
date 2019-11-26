@@ -19,6 +19,20 @@ class InputCard extends Component {
   handleChange = ({ currentTarget: input }) => {
     this.props.handleChange(input.value);
   };
+
+  split = examples => {
+    let array =  examples.split("s");
+    console.log("sdfdsf");
+    console.log(examples);
+    console.log(array);
+    let result = "xzcvxzcv";
+    for (let i = 0; i < array; i++) {
+      if (array[i] !== "") {
+        result += "|" + array[i] + "|\n";
+      }
+    }
+    return result;
+  }
   render() {
     return (
       <div>
@@ -46,12 +60,15 @@ class InputCard extends Component {
                 <p>{example};</p>
               ))}
             </div> */}
-            <TextareaAutosize
+        
+            <textarea style={{}}
               style={{
-                width: 550
+                width: 550,
+                height:180
               }}
               placeholder={this.props.name}
               onChange={this.handleChange}
+              //value = {this.split(this.props.examples)}
               value = {this.props.examples}
             />
           </CardActions>

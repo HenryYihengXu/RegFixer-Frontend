@@ -47,7 +47,7 @@ class ExpressionCard extends Component {
 
             <input
               style={{
-                width: 700
+                width: 1165
               }}
               id={"regex"}
               type="text"

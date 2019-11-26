@@ -1,0 +1,1 @@
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:./z3-4.4.1-x64-osx-10.11
