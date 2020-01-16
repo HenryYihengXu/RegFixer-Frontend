@@ -11,36 +11,77 @@ import TextareaAutosize from "@material-ui/core/TextareaAutosize";
 import { CardHeader } from "@material-ui/core";
 import { blue, grey, red } from "@material-ui/core/colors";
 import { textAlign } from "@material-ui/system";
+import CircularProgress from "@material-ui/core/CircularProgress";
+import { Grid } from "@material-ui/core";
 
 class ResultCard extends Component {
   render() {
+    if (this.props.isWaiting === true) {
+      return (
+        <div>
+          <Card
+            style={{
+              width: "100%"
+              //height: "100%"
+            }}
+          >
+            <CardContent
+              style={{
+                backgroundColor: this.props.color[this.props.darkness],
+                height: 50
+              }}
+            >
+              <h6 style={{ color: grey[50], textAlign: "center" }}>
+                {this.props.name}
+              </h6>
+            </CardContent>
+            <CardActions
+              style={{
+                width: "100%",
+                textAlign: "center",
+                align: "center"
+              }}
+            >
+              <Grid
+                container
+                spacing={0}
+                direction="column"
+                alignItems="center"
+                justify="center"
+              >
+                <CircularProgress
+                  style={{
+                    align: "center"
+                  }}
+                />
+              </Grid>
+            </CardActions>
+          </Card>
+        </div>
+      );
+    }
     return (
       <div>
-        <Card style={{ maxWidth: 1205 }}>
+        <Card
+          style={{
+            width: "100%"
+            //height: "100%"
+          }}
+        >
           <CardContent
             style={{
               backgroundColor: this.props.color[this.props.darkness],
               height: 50
             }}
           >
-            <h6 style={{ color: grey[50] }}>{this.props.name}</h6>
+            <h6 style={{ color: grey[50], textAlign: "center" }}>
+              {this.props.name}
+            </h6>
           </CardContent>
           <CardActions>
-            {/* <div
-              style="border:1px solid black;"
-              contenteditable="true"
-              style={{
-                width: 1195,
-                textAlign: "left",
-                border: "1px solid lightblue"
-              }}
-              onInput={this.handleChange}
-            >
-              {this.props.regex}
-            </div> */}
             <h6
               style={{
-                width: 700,
+                width: "100%",
                 textAlign: "center"
               }}
             >
