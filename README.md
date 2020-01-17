@@ -54,7 +54,9 @@ The index.js is mainly developed with [Node.js](https://nodejs.org/). It keeps l
 - In the root directory, run `npm install` first. It will install all the dependencies.
 - Then run `node index.js`. It will listen on port 3001 by default. Then you can call it and test it with the front end.
 
-So far, it works all good on the local machine.
+Currently, the executable jar file is already generated in /src/target, you don't need to do anything to recompile it. It can be directly called from terminal by `java -Djava.library.path=:./ -jar target/regfixer.jar -m 1 fix --file $FILE_NAME`. And the repo only contains this jar file. To see original source code, go to rongpan's repo. 
+
+So far, the back end works all good on the local machine.
 
 ### **Deployment**
 
